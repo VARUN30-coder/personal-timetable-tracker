@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Timetable</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1 id="dateTitle"></h1><span class="muted" id="clock"></span></div>
+    <div class="row">
+      <button class="btn" id="themeBtn">🌓</button>
+      <button class="btn primary" onclick="openForm()">+ Quick Add Task</button>
+    </div>
+  </header>
+
+  <nav class="row">
+    <button class="tab" id="tToday">Today</button>
+    <button class="tab" id="tTomorrow">Tomorrow</button>
+    <button class="tab" id="tWeek">Week</button>
+    <input type="date" id="datePick">
+  </nav>
+
+  <section class="card">
+    <div class="between"><h2>Progress</h2><b id="pct"></b></div>
+    <div class="bar"><div id="barFill"></div></div>
+    <p class="muted" id="summary"></p>
+  </section>
+
+  <section class="card" id="dayView">
+    <h2>Schedule</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>Time</th><th>Task</th><th>Category</th><th>Priority</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </section>
+
+  <section id="weekView" class="week hidden"></section>
+
+  <div class="grid">
+    <section class="card"><h2>Statistics (this week)</h2><div id="stats"></div></section>
+    <section class="card">
+      <h2>My Goals</h2><div id="goals"></div>
+      <div class="row"><input id="goalIn" placeholder="e.g. Solve 3 LeetCode problems"><button class="btn" onclick="addGoal()">Add</button></div>
+    </section>
+    <section class="card"><h2>Daily Review</h2><div id="review"></div>
+      <label>Notes for tomorrow</label><textarea id="notes" rows="3"></textarea></section>
+  </div>
+</div>
+
+<dialog id="dlg"><form id="form" method="dialog">
+  <h2 id="dlgTitle">Task</h2>
+  <label>Task name</label><input id="fName" required>
+  <label>Notes</label><textarea id="fNotes" rows="2"></textarea>
+  <div class="row"><div><label>Start</label><input type="time" id="fStart" required></div>
+  <div><label>End</label><input type="time" id="fEnd" required></div></div>
+  <div class="row"><div><label>Category (type your own too)</label>
+    <input id="fCat" list="cats" value="Other"><datalist id="cats"></datalist></div>
+  <div><label>Priority</label><select id="fPri"><option>Low</option><option selected>Medium</option><option>High</option></select></div></div>
+  <div class="row"><div><label>Date / starts on</label><input type="date" id="fDate" required></div>
+  <div><label>Repeat</label><select id="fRep">
+    <option value="none">Never</option><option value="daily">Every day</option><option value="weekdays">Weekdays</option>
+    <option value="weekly">Every week</option><option value="custom">Custom days</option></select></div></div>
+  <div id="fDays" class="row hidden"></div>
+  <div class="row end">
+    <button type="button" class="btn danger hidden" id="delBtn">Delete</button>
+    <button type="button" class="btn" onclick="dlg.close()">Cancel</button>
+    <button class="btn primary">Save</button></div>
+</form></dialog>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
